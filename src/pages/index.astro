@@ -1,19 +1,418 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Markdown from '../components/Markdown.astro';
 
-const explainer = `
-An Astro website can go way beyond static pages - on the right platform.
+const roadmap = [
+    {
+        phase: 'Fase 1',
+        title: 'Start en kennismaking',
+        description:
+            'Binnen vijf werkdagen vindt een gesprek plaats over rechten, plichten, bereikbaarheid, financiële inzage, leefgeld, rekeningen, wijzigingen en klachten. De burger ontvangt een kort verslag.',
+    },
+    {
+        phase: 'Fase 2',
+        title: 'Financieel beheer',
+        description:
+            'Alle gebruikte rekeningen worden vastgelegd met rekeningnummer, rekeninghouder, doel, gebruiksperiode, toegang en de manier waarop de burger inzage krijgt.',
+    },
+    {
+        phase: 'Fase 3',
+        title: 'Maandelijks kasboek',
+        description:
+            'Iedere maand is er een kasboek met begin- en eindsaldo, inkomsten, lasten, reserveringen, afdrachten, leefgeld en bijzondere betalingen dat aansluit op bankafschriften.',
+    },
+    {
+        phase: 'Fase 4',
+        title: 'Communicatieplicht',
+        description:
+            'Inhoudelijke vragen krijgen binnen tien werkdagen antwoord. Belangrijke financiële of juridische beslissingen worden vooraf begrijpelijk uitgelegd en schriftelijk bevestigd.',
+    },
+    {
+        phase: 'Fase 5',
+        title: 'Schuldentraject',
+        description:
+            'Bij MSNP of WSNP ontvangt de burger een actueel schuldenoverzicht met bedragen, status, afdrachten en uitleg over schulden die mogelijk buiten de schone lei vallen.',
+    },
+    {
+        phase: 'Fase 6',
+        title: 'Schone lei',
+        description:
+            'Na het schone-lei-vonnis volgt een eindroutekaart met betekenis, uitzonderingen, vervolgstappen, slotuitdelingslijst, CIR-update en herstel van eigen correspondentie.',
+    },
+    {
+        phase: 'Fase 7',
+        title: 'Afwikkeling na schone lei',
+        description:
+            'Binnen tien werkdagen komt er een afwikkellijst met datum, verantwoordelijke partij en bewijsstuk voor iedere stap richting instanties, rekeningen, post en rapportages.',
+    },
+    {
+        phase: 'Fase 8',
+        title: 'Beëindiging beschermingsbewind',
+        description:
+            'Als beschermingsbewind naast WSNP loopt, wordt afzonderlijk vastgelegd of het nog loopt, wanneer opheffing is verzocht en wanneer zelfstandige bevoegdheid terugkeert.',
+    },
+];
 
-Netlify supports not only [Streaming SSR](https://docs.astro.build/en/guides/server-side-rendering/#html-streaming) and fast [Edge Middleware](https://docs.astro.build/en/guides/middleware/), but also [on-demand revalidation](https://www.netlify.com/blog/cache-tags-and-purge-api-on-netlify/) and [stale-while-revalidate](https://www.netlify.com/blog/swr-and-fine-grained-cache-control/). 
-Any page or data can be rebuilt only when needed, without site visitors ever getting a performance hit.
-`;
+const startItems = [
+    'startdatum',
+    'betrokken partijen',
+    'rollen en verantwoordelijkheden',
+    'gebruikte bankrekeningen',
+    'wijze van communicatie',
+    'inzagerecht',
+    'klachtenroute',
+    'eindcriteria',
+    'herstelroute na beëindiging',
+];
+
+const principleCards = [
+    {
+        title: 'Begrijpelijk',
+        body:
+            'De burger ziet de fase, de verantwoordelijke partij, de volgende stap en de gevolgen van besluiten in gewone taal.',
+    },
+    {
+        title: 'Controleerbaar',
+        body:
+            'Financiële overzichten sluiten aan op bankafschriften, bewijsstukken en herleidbare communicatie met betrokken partijen.',
+    },
+    {
+        title: 'Herstelbaar',
+        body:
+            'Na beëindiging is duidelijk wie oude registraties corrigeert, welk bewijs nodig is en wanneer herstel is bevestigd.',
+    },
+];
+
+const spendingVariables = [
+    'openstaande betaalverzoeken, zoals Tikkie',
+    'achteraf betalen, zoals Klarna, Riverty, Billink en nieuwe platformdiensten',
+    'platformbetalingen, zoals bol Payment Services',
+    'abonnementen en terugkerende verplichtingen',
+    'betalingen via appstores en wallets',
+    'telecomfacturatie, bijvoorbeeld via KPN bij digitale diensten',
+    'retourbetalingen die nog onderweg zijn',
+    'nog te ontvangen toeslagen of correcties',
+    'DUO-verplichtingen en studiefinanciering',
+    'automatische incasso’s in de komende 14 tot 30 dagen',
+    'reserveringen voor huur, zorgverzekering, energie en belastingen',
+    'lopende verrekeningen door overheidspartijen',
+    'bewindroutes, postblokkades en oude administratieve koppelingen',
+    'openstaande overheidsschulden en private schulden gescheiden zichtbaar',
+    'actuele VTLB-ruimte',
+    'minimale buffer en herstelruimte',
+];
+
+const spendingFormula = [
+    'banksaldo',
+    'verwachte inkomsten',
+    'verwachte retouren',
+    'vaste lasten',
+    'openstaande verplichtingen',
+    'geplande incasso’s',
+    'achterafbetalingen',
+    'reserveringen',
+    'lopende verrekeningen',
+    '= werkelijke vrije bestedingsruimte',
+];
+
+const dashboardItems = [
+    'actueel banksaldo',
+    'verwachte inkomsten',
+    'geplande vaste lasten',
+    'abonnementen',
+    'achterafbetalingen',
+    'openstaande betaalverzoeken',
+    'retouren onderweg',
+    'overheidsbetalingen en toeslagen',
+    'verrekeningen en beslagen',
+    'buffer',
+    'veilig weekbedrag',
+    'risico’s binnen 14 dagen',
+];
+
+const finalReportItems = [
+    'alle relevante datums',
+    'overzicht gebruikte rekeningen',
+    'financieel eindoverzicht',
+    'slotuitdelingslijst',
+    'status schuldeisers',
+    'status oude registraties',
+    'resterende aandachtspunten',
+    'contactgegevens voor nazorg',
+    'klacht- en herstelroute',
+];
+
+const detailedSections = [
+    {
+        number: '1',
+        title: 'Doel van de codex',
+        body:
+            'De burger moet op ieder moment kunnen zien in welke fase het traject zit, wie verantwoordelijk is, welke stukken beschikbaar moeten zijn, welke financiële gegevens controleerbaar zijn en wanneer het traject juridisch én administratief is afgerond.',
+    },
+    {
+        number: '2',
+        title: 'Basisprincipe',
+        body:
+            'Bij de start ontvangt de burger een schriftelijk trajectoverzicht met startdatum, betrokken partijen, rollen, rekeningen, communicatie, inzagerecht, klachtenroute, eindcriteria en herstelroute.',
+    },
+    {
+        number: '3',
+        title: 'Start en kennismaking',
+        body:
+            'Binnen vijf werkdagen wordt een kennismakingsgesprek gevoerd en schriftelijk samengevat. Een geweigerde of uitblijvende kennismaking wordt met reden vastgelegd.',
+    },
+    {
+        number: '4',
+        title: 'Financieel beheer',
+        body:
+            'Per leefgeld-, beheer-, boedel-, derden- of kwaliteitsrekening wordt vastgelegd wie rekeninghouder is, wat het doel is, wie toegang heeft en hoe inzage werkt.',
+    },
+    {
+        number: '5',
+        title: 'Maandelijks kasboek',
+        body:
+            'Het kasboek toont begin- en eindsaldo, inkomsten, vaste lasten, reserveringen, afdrachten, leefgeld en bijzondere betalingen, en sluit aan op bankafschriften.',
+    },
+    {
+        number: '6',
+        title: 'Communicatieplicht',
+        body:
+            'De trajectverantwoordelijke reageert binnen tien werkdagen, informeert vooraf bij ingrijpende beslissingen en bevestigt belangrijke afspraken schriftelijk.',
+    },
+    {
+        number: '7',
+        title: 'Schuldentraject',
+        body:
+            'Bij MSNP of WSNP is er een actueel schuldenoverzicht met schuldeiser, oorspronkelijk bedrag, erkend en betwist bedrag, afdracht, status en gevolg van akkoord of schone lei.',
+    },
+    {
+        number: '8',
+        title: 'Schone lei',
+        body:
+            'Na het schone-lei-vonnis volgt een eindroutekaart met de betekenis, uitzonderingen, vervolgstappen, informatie aan schuldeisers, slotuitdelingslijst, CIR-update en terugkeer van eigen correspondentie.',
+    },
+    {
+        number: '9',
+        title: 'Afwikkeling na schone lei',
+        body:
+            'Binnen tien werkdagen wordt een afwikkellijst opgesteld voor schuldeisers, deurwaarders, relevante instanties, postblokkade, gemachtigden, rekeningen, slotuitdeling en eindrapport.',
+    },
+    {
+        number: '10',
+        title: 'Beëindiging beschermingsbewind',
+        body:
+            'Als naast WSNP beschermingsbewind loopt, wordt afzonderlijk vastgelegd of het bewind nog loopt, wanneer opheffing is verzocht en wanneer de burger volledig zelfstandig bevoegd is.',
+    },
+    {
+        number: '11',
+        title: 'Eindrapport burger',
+        body:
+            'Bij afsluiting ontvangt de burger één eindrapport met datums, rekeningen, financieel eindoverzicht, slotuitdelingslijst, schuldeisers, registraties, aandachtspunten, nazorg en herstelroute.',
+    },
+    {
+        number: '12',
+        title: 'Controleerbaarheid',
+        body:
+            'Controleerbare informatie betekent brongegevens: geen uitsluitend beroep op interne systemen of portalen zonder bankafschriften, rekeninginformatie en bewijs van communicatie.',
+    },
+    {
+        number: '13',
+        title: 'Herstelroute',
+        body:
+            'Bij oude of onjuiste registraties stelt de verantwoordelijke partij binnen tien werkdagen vast welke registratie fout is, wie corrigeert, welk bewijs nodig is en wie de burger helpt.',
+    },
+    {
+        number: '14',
+        title: 'Minimumnorm',
+        body:
+            'Het traject is pas behoorlijk afgerond wanneer de burger weet wat er is gebeurd, de geldstromen en schulden kan controleren, formele beëindigingsstukken heeft en niet meer afhankelijk is van oude registraties.',
+    },
+    {
+        number: '15',
+        title: 'Slotbepaling',
+        body:
+            'Beschermingsbewind en schuldsanering grijpen diep in. Het systeem moet daarom begrijpelijk, controleerbaar en herstelbaar zijn, niet alleen juridisch juist.',
+    },
+];
+
+const minimumStandard = [
+    'weet wat er is gebeurd',
+    'weet welke bedragen zijn ontvangen en betaald',
+    'weet welke schulden zijn afgehandeld',
+    'weet welke instanties zijn geïnformeerd',
+    'beschikt over de formele beëindigingsstukken',
+    'ontvangt weer rechtstreeks post',
+    'is niet langer afhankelijk van oude bewindvoerdersregistraties',
+    'heeft een controleerbaar financieel eindoverzicht ontvangen',
+];
 ---
 
-<Layout title="Welcome to Astro.">
-    <h1 class="mb-10">Netlify Platform Starter for Astro</h1>
-    <Markdown content={explainer} class="mb-10 text-lg" />
-    <p>
-        <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
-    </p>
+<Layout title="Codex Schone Lei & Beschermingsregie">
+    <section class="py-12 sm:py-20">
+        <p class="mb-4 text-sm font-semibold tracking-[0.25em] text-primary uppercase">Praktische routekaart voor burgers</p>
+        <div class="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+            <div>
+                <h1 class="max-w-4xl">Codex Schone Lei & Beschermingsregie</h1>
+                <p class="mt-6 max-w-3xl text-xl leading-8 text-white/80">
+                    Een praktische routekaart voor burgers die te maken krijgen met beschermingsbewind, schuldhulpverlening, MSNP of WSNP, aangevuld met Vinkje: een regielaag voor werkelijke bestedingsruimte.
+                    Het traject moet begrijpelijk, controleerbaar en herstelbaar zijn, niet alleen juridisch juist.
+                </p>
+            </div>
+            <aside class="rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl backdrop-blur">
+                <h2 class="text-2xl">Basisprincipe</h2>
+                <p class="mt-4 text-lg font-semibold text-primary">Geen bewind, MSNP of WSNP zonder routekaart.</p>
+                <p class="mt-3 text-white/75">
+                    Zonder schriftelijk en begrijpelijk trajectoverzicht is geen sprake van volledige geïnformeerde deelname.
+                </p>
+            </aside>
+        </div>
+    </section>
+
+    <section class="mb-14 rounded-3xl bg-white p-6 text-complementary shadow-xl sm:p-8">
+        <h2>Bij de start moet duidelijk zijn</h2>
+        <ul class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {startItems.map((item) => <li class="rounded-2xl bg-complementary/10 px-4 py-3 font-medium">{item}</li>)}
+        </ul>
+    </section>
+
+    <section class="mb-14 rounded-3xl border border-primary/40 bg-primary/15 p-6 shadow-xl sm:p-8">
+        <div class="max-w-3xl">
+            <p class="text-sm font-semibold tracking-[0.2em] text-primary uppercase">Kernnorm</p>
+            <h2 class="mt-2">Begrijpelijk, controleerbaar en herstelbaar</h2>
+            <p class="mt-4 text-lg leading-8 text-white/80">
+                Juridische juistheid is de ondergrens. De burger moet het traject kunnen volgen, de administratie kunnen controleren en fouten na afloop kunnen laten herstellen.
+            </p>
+        </div>
+        <div class="mt-8 grid gap-4 md:grid-cols-3">
+            {
+                principleCards.map((card) => (
+                    <article class="rounded-2xl bg-white p-5 text-complementary">
+                        <h3 class="text-xl font-bold">{card.title}</h3>
+                        <p class="mt-3 leading-7 text-complementary/75">{card.body}</p>
+                    </article>
+                ))
+            }
+        </div>
+    </section>
+
+
+    <section class="mb-14 rounded-3xl bg-white p-6 text-complementary shadow-xl sm:p-8">
+        <div class="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+            <div>
+                <p class="text-sm font-semibold tracking-[0.2em] text-primary uppercase">Codex-update</p>
+                <h2 class="mt-2">Van banksaldo naar werkelijke bestedingsruimte</h2>
+                <p class="mt-4 leading-7 text-complementary/75">
+                    Het klassieke banksaldo zegt steeds minder over de werkelijke financiële positie. Betaalverzoeken, wallets, achterafbetaaldiensten, abonnementen, retouren, toeslagen, incasso’s en oude administratieve koppelingen bepalen samen of geld vandaag echt vrij beschikbaar is.
+                </p>
+                <p class="mt-4 text-lg font-semibold">Vinkje moet antwoord geven op één vraag: wat kan iemand vandaag veilig besteden, zonder morgen vast te lopen?</p>
+            </div>
+            <div class="rounded-2xl bg-complementary p-6 text-white">
+                <h3 class="text-xl font-bold">Werkelijke vrije bestedingsruimte</h3>
+                <ul class="mt-5 space-y-2">
+                    {spendingFormula.map((item, index) => <li class:list={["flex justify-between gap-4 border-white/10 py-2", index === spendingFormula.length - 1 ? 'border-t pt-4 font-bold text-primary' : 'border-b']}><span>{item}</span></li>)}
+                </ul>
+                <p class="mt-5 text-sm leading-6 text-white/70">Dit bedrag is niet gelijk aan het banksaldo. Iedere verplichting telt mee, ongeacht of die loopt via bank, wallet, appstore, telecomfactuur, webwinkelplatform, bewindvoerder, deurwaarder of overheid.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-14 grid gap-6 lg:grid-cols-2">
+        <article class="rounded-3xl border border-white/15 bg-white/10 p-6 shadow-xl backdrop-blur sm:p-8">
+            <p class="text-sm font-semibold tracking-[0.2em] text-primary uppercase">Nieuwe variabelen binnen Vinkje</p>
+            <h2 class="mt-2">Alles wat geld al bestemd maakt</h2>
+            <p class="mt-4 leading-7 text-white/75">Naast inkomen, vaste lasten, schulden en beslagvrije voet moeten ook versnipperde betaalroutes en uitgestelde verplichtingen zichtbaar worden.</p>
+            <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+                {spendingVariables.map((item) => <li class="rounded-2xl bg-white/10 px-4 py-3 text-sm leading-6">{item}</li>)}
+            </ul>
+        </article>
+        <article class="rounded-3xl border border-primary/40 bg-primary/15 p-6 shadow-xl sm:p-8">
+            <p class="text-sm font-semibold tracking-[0.2em] text-primary uppercase">Persoonlijk Bestaansdashboard</p>
+            <h2 class="mt-2">Aparte laag: werkelijke bestedingsruimte</h2>
+            <p class="mt-4 leading-7 text-white/75">Vinkje is geen extra huishoudboekje. Een huishoudboekje laat zien waar geld is gebleven; Vinkje laat zien of de situatie begrijpelijk, controleerbaar en herstelbaar is.</p>
+            <p class="mt-4 leading-7 text-white/75">De versnippering van betaalstromen is geen individueel falen, maar een systeemrisico. Vinkje fungeert daarom als onafhankelijke regielaag boven tientallen partijen die elkaar niet automatisch corrigeren.</p>
+            <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+                {dashboardItems.map((item) => <li class="rounded-2xl bg-white px-4 py-3 text-sm font-medium text-complementary">{item}</li>)}
+            </ul>
+        </article>
+    </section>
+
+    <section class="mb-14">
+        <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+                <p class="text-sm font-semibold tracking-[0.2em] text-primary uppercase">Fasen</p>
+                <h2 class="mt-2">Routekaart van start tot herstel</h2>
+            </div>
+            <p class="max-w-2xl text-white/70">Iedere fase maakt voor burgers zichtbaar wie verantwoordelijk is, welke stukken beschikbaar moeten zijn en welke gegevens controleerbaar moeten blijven.</p>
+        </div>
+        <div class="grid gap-5 md:grid-cols-2">
+            {
+                roadmap.map((step) => (
+                    <article class="rounded-3xl border border-white/15 bg-white/10 p-6 backdrop-blur">
+                        <p class="text-sm font-bold tracking-[0.2em] text-primary uppercase">{step.phase}</p>
+                        <h3 class="mt-3 text-2xl font-bold">{step.title}</h3>
+                        <p class="mt-3 leading-7 text-white/75">{step.description}</p>
+                    </article>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="mb-14 rounded-3xl border border-white/15 bg-white/10 p-6 backdrop-blur sm:p-8">
+        <div class="mb-8 max-w-3xl">
+            <p class="text-sm font-semibold tracking-[0.2em] text-primary uppercase">Volledige codex</p>
+            <h2 class="mt-2">15 controlepunten voor beschermingsregie</h2>
+            <p class="mt-4 text-white/75">
+                Deze praktische samenvatting zet per onderdeel naast elkaar wat de burger moet krijgen, wie moet handelen en welk bewijs nodig is, zodat het traject van start tot administratieve afronding controleerbaar blijft.
+            </p>
+        </div>
+        <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {
+                detailedSections.map((section) => (
+                    <article class="rounded-2xl bg-white/10 p-5">
+                        <p class="text-sm font-bold text-primary">{section.number}</p>
+                        <h3 class="mt-2 text-xl font-bold">{section.title}</h3>
+                        <p class="mt-3 text-sm leading-6 text-white/75">{section.body}</p>
+                    </article>
+                ))
+            }
+        </div>
+    </section>
+
+    <section class="mb-14 grid gap-6 lg:grid-cols-2">
+        <article class="rounded-3xl bg-primary p-6 text-primary-content shadow-xl sm:p-8">
+            <h2>Controleerbaarheid</h2>
+            <p class="mt-4 leading-7">
+                De burger heeft recht op brongegevens: bankafschriften, rekeninginformatie, bewijs van communicatie en een herleidbaar saldoverloop. Een portaal of intern systeem is ondersteunend, maar vervangt nooit de bronadministratie.
+            </p>
+        </article>
+        <article class="rounded-3xl border border-white/15 bg-white/10 p-6 shadow-xl backdrop-blur sm:p-8">
+            <h2>Herstelroute</h2>
+            <p class="mt-4 leading-7 text-white/75">
+                Als na beëindiging oude registraties blijven bestaan, stelt de verantwoordelijke partij binnen tien werkdagen vast welke registratie onjuist is, wie corrigeert, welk bewijs nodig is en wanneer herstel is bevestigd.
+            </p>
+        </article>
+    </section>
+
+    <section class="mb-14 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <article class="rounded-3xl border border-white/15 bg-white/10 p-6 backdrop-blur sm:p-8">
+            <h2>Eindrapport burger</h2>
+            <p class="mt-4 text-white/75">Zonder eindrapport is het traject administratief niet controleerbaar afgesloten.</p>
+            <ul class="mt-6 space-y-3">
+                {finalReportItems.map((item) => <li class="flex gap-3"><span class="text-primary">•</span><span>{item}</span></li>)}
+            </ul>
+        </article>
+        <article class="rounded-3xl bg-white p-6 text-complementary shadow-xl sm:p-8">
+            <h2>Minimumnorm</h2>
+            <p class="mt-4 text-complementary/75">Een traject is pas behoorlijk afgerond wanneer de burger:</p>
+            <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+                {minimumStandard.map((item) => <li class="rounded-2xl bg-complementary/10 px-4 py-3 font-medium">{item}</li>)}
+            </ul>
+        </article>
+    </section>
+
+    <section class="mb-16 rounded-3xl border border-white/15 bg-complementary/60 p-6 text-center shadow-2xl sm:p-10">
+        <h2>Slotbepaling</h2>
+        <p class="mx-auto mt-5 max-w-3xl text-xl leading-9 text-white/80">
+            Een schone lei zonder routekaart en zonder zicht op werkelijke bestedingsruimte is geen echte terugkeer naar zelfstandigheid, maar een administratieve verdwaling na de finish. Daarom moet het traject begrijpelijk, controleerbaar en herstelbaar zijn, niet alleen juridisch juist.
+        </p>
+    </section>
 </Layout>
