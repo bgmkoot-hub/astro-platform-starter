@@ -51,9 +51,26 @@ const checks = ['Inkomen klopt', 'Adres klopt', 'Huishouden klopt', 'Geen beslag
                     <p class="gentle-note"><StatusIcon type="check" /> Je houdt deze maand naar verwachting genoeg geld over.</p>
                 </section>
 
-                <section class="card action-card" aria-labelledby="action-title">
-                    <div class="icon-box"><StatusIcon type="check" /></div>
-                    <div><p class="eyebrow">Moet ik iets doen?</p><h2 id="action-title">Geen actie nodig</h2><p>Op dit moment hoef je niets door te geven of aan te vullen.</p></div>
+                <section class="card responsibility-card" aria-labelledby="responsibility-title">
+                    <div class="section-heading responsibility-heading">
+                        <div><p class="eyebrow">Wie is aan zet?</p><h2 id="responsibility-title">Dit gebeurt er nu</h2></div>
+                        <span class="good-pill">Duidelijke taakverdeling</span>
+                    </div>
+                    <div class="responsibility-grid">
+                        <article class="responsibility-item citizen-action">
+                            <div class="responsibility-title"><div class="icon-box"><StatusIcon type="check" /></div><h3>Wat moet ik doen?</h3></div>
+                            <strong>Geen actie nodig</strong>
+                            <p>Je hoeft nu niets door te geven of aan te vullen.</p>
+                            <span class="responsibility-owner">Jij bent klaar</span>
+                        </article>
+                        <article class="responsibility-item government-action">
+                            <div class="responsibility-title"><span class="government-icon" aria-hidden="true">↻</span><h3>Wat moet de overheid doen?</h3></div>
+                            <strong>Je nieuwe inkomen verwerken</strong>
+                            <p>De Belastingdienst berekent je toeslagen voor volgende maand opnieuw.</p>
+                            <span class="responsibility-owner">Belastingdienst · uiterlijk 31 augustus</span>
+                        </article>
+                    </div>
+                    <p class="responsibility-summary"><strong>Jij hoeft niets te doen.</strong> De overheid is aan zet.</p>
                 </section>
 
                 <section class="card" aria-labelledby="arrangements-title">
