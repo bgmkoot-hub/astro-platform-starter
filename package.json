@@ -7,7 +7,8 @@
         "start": "astro dev",
         "build": "astro build",
         "preview": "astro preview",
-        "astro": "astro"
+        "astro": "astro",
+        "screenshot": "playwright screenshot --viewport-size=\"1440,1100\" --full-page http://127.0.0.1:4321/ /tmp/vinkje-dashboard.png"
     },
     "dependencies": {
         "@astrojs/netlify": "^6.6.0",
@@ -29,6 +30,7 @@
         "@types/blobshape": "^1.0.3",
         "@types/node": "^20.12.7",
         "@types/react": "^19.2.2",
-        "@types/react-dom": "^19.2.2"
+        "@types/react-dom": "^19.2.2",
+        "playwright": "1.55.0"
     }
 }
