@@ -1,19 +1,122 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Markdown from '../components/Markdown.astro';
+import DashboardLayout from '../layouts/DashboardLayout.astro';
+import StatusIcon from '../components/dashboard/StatusIcon.astro';
 
-const explainer = `
-An Astro website can go way beyond static pages - on the right platform.
+const money = [
+    { label: 'Inkomen', value: '€ 2.184' },
+    { label: 'Vaste lasten', value: '€ 1.736' },
+    { label: 'Vrij beschikbaar', value: '€ 448', featured: true },
+    { label: 'Buffer', value: '€ 1.240' }
+];
 
-Netlify supports not only [Streaming SSR](https://docs.astro.build/en/guides/server-side-rendering/#html-streaming) and fast [Edge Middleware](https://docs.astro.build/en/guides/middleware/), but also [on-demand revalidation](https://www.netlify.com/blog/cache-tags-and-purge-api-on-netlify/) and [stale-while-revalidate](https://www.netlify.com/blog/swr-and-fine-grained-cache-control/). 
-Any page or data can be rebuilt only when needed, without site visitors ever getting a performance hit.
-`;
+const arrangements = [
+    { name: 'AOW', description: 'Je ontvangt iedere maand € 1.486. Dit bedrag past bij de gegevens die bij ons bekend zijn.' },
+    { name: 'Zorgtoeslag', description: 'Je ontvangt € 123 per maand. Je inkomen is al verwerkt in deze berekening.' },
+    { name: 'Huurtoeslag', description: 'Je ontvangt € 395 per maand. Je huur en woonsituatie zijn bekend.' }
+];
+
+const organisations = [
+    { name: 'SVB', known: 'Je AOW en je rekeningnummer', action: 'Geen actie loopt', owner: 'Niemand hoeft iets te doen' },
+    { name: 'Belastingdienst', known: 'Je inkomen, huur en toeslagen', action: 'Verwerkt je nieuwe inkomen', owner: 'Belastingdienst' },
+    { name: 'Gemeente', known: 'Je adres en huishouden', action: 'Geen actie loopt', owner: 'Niemand hoeft iets te doen' }
+];
+
+const checks = ['Inkomen klopt', 'Adres klopt', 'Huishouden klopt', 'Geen beslag', 'Geen tegenstrijdige gegevens gevonden'];
 ---
 
-<Layout title="Welcome to Astro.">
-    <h1 class="mb-10">Netlify Platform Starter for Astro</h1>
-    <Markdown content={explainer} class="mb-10 text-lg" />
-    <p>
-        <a href="https://docs.netlify.com/frameworks/astro/" class="btn btn-lg sm:min-w-64">Read the Docs</a>
-    </p>
-</Layout>
+<DashboardLayout title="Mijn bestaanszekerheid | Vinkje">
+    <main id="inhoud" class="dashboard-shell">
+        <section class="hero" aria-labelledby="page-title">
+            <p class="eyebrow">Vandaag, 16 augustus</p>
+            <h1 id="page-title">Mijn bestaanszekerheid</h1>
+            <div class="main-status">
+                <StatusIcon type="check" size="large" />
+                <div>
+                    <h2>Alles in orde</h2>
+                    <p>Je hoeft vandaag niets te doen.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="dashboard-grid">
+            <div class="main-column">
+                <section class="card money-card" aria-labelledby="money-title">
+                    <div class="section-heading">
+                        <div><p class="eyebrow">Overzicht</p><h2 id="money-title">Deze maand</h2></div>
+                        <span class="period">Augustus 2026</span>
+                    </div>
+                    <dl class="money-grid">
+                        {money.map((item) => <div class:list={['money-item', { featured: item.featured }]}><dt>{item.label}</dt><dd>{item.value}</dd></div>)}
+                    </dl>
+                    <p class="gentle-note"><StatusIcon type="check" /> Je houdt deze maand naar verwachting genoeg geld over.</p>
+                </section>
+
+                <section class="card responsibility-card" aria-labelledby="responsibility-title">
+                    <div class="section-heading responsibility-heading">
+                        <div><p class="eyebrow">Wie is aan zet?</p><h2 id="responsibility-title">Dit gebeurt er nu</h2></div>
+                        <span class="good-pill">Duidelijke taakverdeling</span>
+                    </div>
+                    <div class="responsibility-grid">
+                        <article class="responsibility-item citizen-action">
+                            <div class="responsibility-title"><div class="icon-box"><StatusIcon type="check" /></div><h3>Wat moet ik doen?</h3></div>
+                            <strong>Geen actie nodig</strong>
+                            <p>Je hoeft nu niets door te geven of aan te vullen.</p>
+                            <span class="responsibility-owner">Jij bent klaar</span>
+                        </article>
+                        <article class="responsibility-item government-action">
+                            <div class="responsibility-title"><span class="government-icon" aria-hidden="true">↻</span><h3>Wat moet de overheid doen?</h3></div>
+                            <strong>Je nieuwe inkomen verwerken</strong>
+                            <p>De Belastingdienst berekent je toeslagen voor volgende maand opnieuw.</p>
+                            <span class="responsibility-owner">Belastingdienst · uiterlijk 31 augustus</span>
+                        </article>
+                    </div>
+                    <p class="responsibility-summary"><strong>Jij hoeft niets te doen.</strong> De overheid is aan zet.</p>
+                </section>
+
+                <section class="card" aria-labelledby="arrangements-title">
+                    <div class="section-heading"><div><p class="eyebrow">Krijg ik waar ik recht op heb?</p><h2 id="arrangements-title">Mijn inkomen en regelingen</h2></div><span class="good-pill">Alles klopt</span></div>
+                    <div class="details-list">
+                        {arrangements.map((item) => (
+                            <details>
+                                <summary><span class="summary-name"><StatusIcon type="check" />{item.name}</span><span class="summary-state">Klopt</span><span class="chevron" aria-hidden="true">⌄</span></summary>
+                                <p>{item.description}</p>
+                            </details>
+                        ))}
+                    </div>
+                </section>
+
+                <section class="card change-card" aria-labelledby="change-title">
+                    <div class="change-heading"><span class="change-icon" aria-hidden="true">↗</span><div><p class="eyebrow">Nieuwe informatie</p><h2 id="change-title">Er is iets veranderd</h2><p>Je inkomen is deze maand <strong>€ 300 hoger.</strong></p></div></div>
+                    <ul class="known-list"><li>Gemeente weet dit al <StatusIcon type="check" /></li><li>Belastingdienst weet dit al <StatusIcon type="check" /></li></ul>
+                    <p class="no-action"><strong>Jij hoeft dit niet opnieuw door te geven.</strong><br />De overheid is aan zet.</p>
+                    <div class="impact"><div><span>Verwacht gevolg volgende maand</span><strong>− € 187</strong></div><button class="primary-button" type="button" aria-expanded="false" aria-controls="calculation">Bekijk de berekening</button></div>
+                    <div id="calculation" class="calculation" hidden><div><span>Huurtoeslag</span><strong>− € 112</strong></div><div><span>Zorgtoeslag</span><strong>− € 75</strong></div><div class="calculation-total"><span>Totaal volgende maand</span><strong>− € 187</strong></div><p>Dit wordt automatisch verwerkt. Je hoeft niets te doen.</p></div>
+                </section>
+
+                <section class="card reality-card" aria-labelledby="reality-title">
+                    <div class="reality-intro"><div class="reality-mark" aria-hidden="true">R</div><div><p class="eyebrow">Bescherming bij terugbetalen</p><h2 id="reality-title">Reality Check</h2><p>Wat is een haalbare oplossing zonder nieuwe geldzorgen?</p></div></div>
+                    <dl class="reality-grid"><div><dt>Mogelijk terug te betalen</dt><dd>€ 487</dd></div><div><dt>Veilige aflossing</dt><dd>€ 35 <small>per maand</small></dd></div><div><dt>Risico op nieuwe schulden</dt><dd class="low"><span></span>Laag</dd></div><div><dt>Bestaanszekerheid blijft intact</dt><dd>Ja <StatusIcon type="check" /></dd></div></dl>
+                    <div class="proposal"><p>Voorgestelde oplossing</p><h3>€ 35 per maand</h3><p>Zo kan het bedrag worden terugbetaald zonder dat huur, energie, zorgverzekering of boodschappen in de knel komen.</p></div>
+                </section>
+            </div>
+
+            <aside class="side-column" aria-label="Aanvullende controles">
+                <section class="card compact-card" aria-labelledby="government-title"><p class="eyebrow">Wie is aan zet?</p><h2 id="government-title">Mijn overheid</h2><div class="details-list organisation-list">{organisations.map((item) => <details><summary><span class="summary-name">{item.name}</span><span class="summary-state">Geen actie nodig</span><span class="chevron">⌄</span></summary><dl><div><dt>Bekend</dt><dd>{item.known}</dd></div><div><dt>Actie</dt><dd>{item.action}</dd></div><div><dt>Wie is aan zet?</dt><dd>{item.owner}</dd></div></dl></details>)}</div></section>
+                <section class="card compact-card" aria-labelledby="check-title"><p class="eyebrow">Laatste controle: vandaag</p><h2 id="check-title">Controle</h2><ul class="check-list">{checks.map((check) => <li><StatusIcon type="check" /><span>{check}</span></li>)}</ul><p class="check-footer">We controleren dit overzicht regelmatig voor je.</p></section>
+                <blockquote>“Een administratief probleem mag niet onnodig een bestaansprobleem worden.”</blockquote>
+            </aside>
+        </div>
+    </main>
+</DashboardLayout>
+
+<script>
+    const button = document.querySelector<HTMLButtonElement>('[aria-controls="calculation"]');
+    const calculation = document.querySelector<HTMLElement>('#calculation');
+    button?.addEventListener('click', () => {
+        if (!calculation) return;
+        const willOpen = calculation.hidden;
+        calculation.hidden = !willOpen;
+        button.setAttribute('aria-expanded', String(willOpen));
+        button.textContent = willOpen ? 'Sluit de berekening' : 'Bekijk de berekening';
+    });
+</script>

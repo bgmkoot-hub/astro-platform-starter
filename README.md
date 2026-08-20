@@ -1,10 +1,39 @@
-# Astro on Netlify Platform Starter
+# VINKJE 2.0
 
-[Live Demo](https://astro-platform-starter.netlify.app/)
+VINKJE 2.0 is een bestaanszekerheidsdashboard dat problemen vroeg zichtbaar maakt en helpt voorkomen dat een administratief probleem een bestaansprobleem wordt.
 
-A modern starter based on Astro.js, Tailwind, and [Netlify Core Primitives](https://docs.netlify.com/core/overview/#develop) (Edge Functions, Image CDN, Blobs).
+## Centrale uitgangspunten
 
-## Astro Commands
+> **Niet een betere herstelprocedure bouwen. Zorgen dat herstel zo vroeg plaatsvindt dat die procedure niet meer nodig is.**
+
+VINKJE vraagt niet primair om meer uitvoeringscapaciteit. Het probeert bestaande capaciteit terug te winnen door vermijdbare procedures, overdrachten en vervolgschade te voorkomen. Betere dienstverlening en lagere uitvoeringslasten kunnen zo dezelfde kant op wijzen.
+
+Voor de ontwikkeling geldt:
+
+> **We lossen nu alleen op wat de volgende bruikbare versie van VINKJE tegenhoudt. De rest wordt een ticket.**
+
+We werken daarom in kleine stappen: bouwen, bekijken, begrijpen, het probleem en de eigenaar zichtbaar maken, prioriteren, oplossen en controleren.
+
+## Meten in een pilot
+
+Een pilot beoordeelt niet alleen financiële opbrengsten. We vergelijken ook:
+
+- doorlooptijd;
+- aantal contactmomenten;
+- aantal overdrachten;
+- aantal brieven;
+- bezwaar- en beroepsprocedures;
+- benodigde medewerkerstijd;
+- tijd tot feitelijk herstel;
+- voorkomen vervolgschade.
+
+Zo wordt zichtbaar of vroeg administratief herstel zowel de burger als de uitvoering daadwerkelijk helpt.
+
+## Techniek
+
+Het project gebruikt Astro, Tailwind en de Netlify-adapter. Het huidige dashboard werkt uitsluitend met lokale voorbeeldgegevens.
+
+## Astro-commando's
 
 All commands are run from the root of the project, from a terminal:
 
@@ -17,11 +46,11 @@ All commands are run from the root of the project, from a terminal:
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
 
-## Deploying to Netlify
+## Uitrollen op Netlify
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/astro-platform-starter)
 
-## Developing Locally
+## Lokaal ontwikkelen
 
 | Prerequisites                                                                |
 | :--------------------------------------------------------------------------- |

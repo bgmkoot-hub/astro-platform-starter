@@ -1,0 +1,18 @@
+---
+import '../styles/dashboard.css';
+import '@fontsource-variable/inter/wght.css';
+import interWoff2 from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+interface Props { title: string }
+const { title } = Astro.props;
+const nav = ['Vandaag', 'Mijn geld', 'Regelingen', 'Herstel', 'Mijn gegevens'];
+---
+<!doctype html>
+<html lang="nl">
+    <head><meta charset="UTF-8" /><title>{title}</title><meta name="description" content="Een helder overzicht van je inkomen, regelingen en acties." /><meta name="viewport" content="width=device-width" /><link rel="icon" type="image/svg+xml" href="/favicon.svg" /><link rel="preload" as="font" type="font/woff2" href={interWoff2} crossorigin /></head>
+    <body>
+        <a class="skip-link" href="#inhoud">Ga naar de inhoud</a>
+        <header class="site-header"><div class="header-inner"><a class="brand" href="/" aria-label="Vinkje home"><span class="brand-mark"><svg viewBox="0 0 24 24"><path d="m6.5 12.5 3.4 3.4L18 7.8" /></svg></span><span>Vinkje</span></a><nav aria-label="Hoofdnavigatie"><ul>{nav.map((item, index) => <li><a class:list={{ active: index === 0 }} href={index === 0 ? '/' : `/#${item.toLowerCase().replace(' ', '-')}`} aria-current={index === 0 ? 'page' : undefined}>{item}</a></li>)}</ul></nav><button class="profile" type="button" aria-label="Profiel van Marja de Vries"><span>MD</span><span class="profile-name">Marja de Vries<small>Mijn profiel</small></span><span aria-hidden="true">⌄</span></button></div></header>
+        <slot />
+        <footer><div><span class="brand footer-brand"><span class="brand-mark"><svg viewBox="0 0 24 24"><path d="m6.5 12.5 3.4 3.4L18 7.8" /></svg></span>Vinkje</span><p>Dit is een eerste voorbeeld met lokale testgegevens.</p></div><p>Hulp nodig? <a href="mailto:hulp@vinkje.nl">Neem contact op</a></p></footer>
+    </body>
+</html>
